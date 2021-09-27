@@ -1,5 +1,5 @@
-name: 'Upload release assets'
-description: 'Upload file to release assets'
+name: 'Upload GitHub release assets'
+description: 'Upload file to GitHub release assets'
 inputs:
   tag:
     description: 'git tag'
