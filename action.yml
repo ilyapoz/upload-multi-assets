@@ -1,4 +1,4 @@
-name: 'Upload GitHub release assets'
+name: 'Upload multi files to GitHub release assets'
 description: 'Upload file to GitHub release assets'
 inputs:
   tag:
