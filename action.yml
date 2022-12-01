@@ -31,13 +31,14 @@ runs:
         if [ -d ${{ inputs.asset-path }} ]; then
             for filename in `ls ${{ inputs.asset-path }}`;
             do
-                folder_list[j]=${{ inputs.asset-path }}/$filename
+                folder_list[j]=$filename
                 j=`expr $j + 1`
             done
         else
             folder_list[0]=${{ inputs.asset-path }}
         fi
         echo "Uploading asset... "
+        cd ${{ inputs.asset-path }}
         for filepath in ${folder_list[@]};
         do
             filename=$(basename "${filepath}")
