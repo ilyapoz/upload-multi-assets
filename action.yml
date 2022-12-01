@@ -46,6 +46,6 @@ runs:
             echo "filepath ${filepath}"
 
            
-            gh release upload ${{ inputs.tag }} $filepath --clobber --repo ${{ github.repository }} 
+            gh release upload ${{ inputs.tag }} $filename --clobber --repo ${{ github.repository }} 
         done
       shell: bash
