@@ -22,8 +22,6 @@ runs:
   using: "composite"
   steps:
     - name: upload
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         if [ ${{ inputs.gh_token }} == '' ]; then
           echo "gh_token from input is null, read from env"
