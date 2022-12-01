@@ -44,8 +44,11 @@ runs:
         for filepath in ${folder_list[@]};
         do
             filename=$(basename "${filepath}")
- 
-            gh release upload ${{ inputs.tag }} ${filepath}) --clobber --repo ${{ github.repository }}
+            echo "filename $filename"
+            echo "filepath ${filepath}"
+
+
+            gh release upload ${{ inputs.tag }} ${filepath} --clobber --repo ${{ github.repository }}
               /repos/OWNER/REPO/releases/${{ inputs.release_id }}/assets?name=${filepath}
  
         done
