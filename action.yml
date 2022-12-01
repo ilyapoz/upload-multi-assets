@@ -23,7 +23,8 @@ runs:
   steps:
     - name: upload
       run: |
-        if [ ${{ inputs.gh_token }} == '' ]; then
+        echo "GH_TOKEN is $GH_TOKEN"
+        if [ -z ${{ inputs.gh_token }} ]; then
           echo "gh_token from input is null, read from env"
         else
           echo "get gh_token success"
