@@ -13,10 +13,7 @@ inputs:
     description: 'gh_token from import'
     required: false
     default: ''
-  release_id:
-    description: 'release id'
-    required: true
-    default: ''
+ 
   
 runs:
   using: "composite"
@@ -47,9 +44,7 @@ runs:
             echo "filename $filename"
             echo "filepath ${filepath}"
 
-
-            gh release upload ${{ inputs.tag }} ${filepath} --clobber --repo ${{ github.repository }}
-              /repos/OWNER/REPO/releases/${{ inputs.release_id }}/assets?name=${filepath}
- 
+           
+            gh release upload ${{ inputs.tag }} ${filepath} --clobber --repo ${{ github.repository }} 
         done
       shell: bash
