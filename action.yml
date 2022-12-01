@@ -9,17 +9,28 @@ inputs:
     description: 'file path to be uploaded'
     required: true
     default: ''
-  upload_url:
-    description: 'upload url'
+  gh_token:
+    description: 'gh_token from import'
+    required: false
+    default: ''
+  release_id:
+    description: 'release id'
     required: true
     default: ''
   
 runs:
   using: "composite"
   steps:
-    - run: |
-        GH_RELEASE=$(sed s#/refs/tags## <<< "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ inputs.tag }}")
-        upload_url=${{ inputs.upload_url }}
+    - name: upload
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        if [ ${{ inputs.gh_token }} == '' ]; then
+          echo "gh_token from input is null, read from env"
+        else
+          echo "get gh_token success"
+          export GH_TOKEN=${{ inputs.gh_token }}
+        fi
         j=0
         if [ -d ${{ inputs.asset-path }} ]; then
             for filename in `ls ${{ inputs.asset-path }}`;
@@ -34,12 +45,9 @@ runs:
         for filepath in ${folder_list[@]};
         do
             filename=$(basename "${filepath}")
-            content_type=$(file -b --mime-type ${filepath})
-            curl --silent \
-                --request POST \
-                --url "$upload_url?name=$filename" \
-                --header "authorization: Bearer ${{ github.token }}" \
-                --header "content-type: $content_type" \
-                --data-binary @"${filepath}"
+ 
+            gh release upload ${{ inputs.tag }} ${filepath}) --clobber --repo ${{ github.repository }}
+              /repos/OWNER/REPO/releases/${{ inputs.release_id }}/assets?name=${filepath}
+ 
         done
       shell: bash
